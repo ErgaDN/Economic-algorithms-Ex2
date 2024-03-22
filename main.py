@@ -1,16 +1,9 @@
-# This is a sample Python script.
+import cvxpy as cv
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+t = 2/3
+x = cv.Variable(1)
+prob = cv.Problem(objective=cv.Maximize(cv.log(x) + cv.log(1 - t * x)), constraints=[x <= 1, x >= 0])
+prob.solve(solver=cv.ECOS)
+print("Status: ", prob.status)
+print(("Optimal value: ", prob.value))
+print("Optimal var: ", x.value)
